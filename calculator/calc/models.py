@@ -1,25 +1,11 @@
 from django.db import models
+from django.urls import reverse
 # from django.contrib.gis.db import models as geo_model
 # Create your models here.
 
-class Truck(models.Model):
-    name = models.CharField(max_length=200,db_index=True)
-    model = models.CharField(max_length=200,db_index=True)
-    carrying_capacity = models.DecimalField(max_digits=10, decimal_places=2)
-    max_carrying_capacity = models.DecimalField(max_digits=10, decimal_places=2)
-    percentage_SiO2 = models.DecimalField(max_digits=10, decimal_places=2)
-    percentage_Fe = models.DecimalField(max_digits=10, decimal_places=2)
-
-    class Meta:
-        verbose_name = 'truck'
-        verbose_name_plural = 'trucks'
-        
-    
-    def __str__(self):
-        return self.name
-
 class Storage(models.Model):
     name = models.CharField(max_length=200,db_index=True)
+    slug = models.SlugField(max_length=200, unique=True)
     capacity = models.DecimalField(max_digits=10, decimal_places=2)
     percentage_SiO2 = models.DecimalField(max_digits=10, decimal_places=2)
     percentage_Fe = models.DecimalField(max_digits=10, decimal_places=2)
@@ -29,12 +15,37 @@ class Storage(models.Model):
     #mpoly = models.MultiPolygonField(srid=4326, null=False, blank=False)
 
     class Meta:
+        ordering = ('name',)
         verbose_name = 'storage'
         verbose_name_plural = 'storages'
     
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('shop:product_list_by_category', args=[self.slug])
+
+class Truck(models.Model):
+    storage = models.ForeignKey(Storage, related_name='Storage', on_delete=models.CASCADE)
+    is_online = models.BooleanField(default=True)
+    name = models.CharField(max_length=200,db_index=True)
+    slug = models.SlugField(max_length=200, unique=True)
+    model = models.CharField(max_length=200,db_index=True)
+    carrying_capacity = models.DecimalField(max_digits=10, decimal_places=2)
+    max_carrying_capacity = models.DecimalField(max_digits=10, decimal_places=2)
+    percentage_SiO2 = models.DecimalField(max_digits=10, decimal_places=2)
+    percentage_Fe = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'truck'
+        verbose_name_plural = 'trucks'
+        
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('shop:product_list_by_category', args=[self.slug])
 
 
 

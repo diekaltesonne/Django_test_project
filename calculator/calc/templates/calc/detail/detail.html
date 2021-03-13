@@ -1,0 +1,19 @@
+{% extends "calc/base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Products
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div id="sidebar">
+        <h3>Trucks</h3>
+        {% for c in trucks %}
+            <li> <p> {{ c.name }}</p> </li>
+        {% endfor %}
+    </div>
+    
+{% endblock %}
