@@ -4,26 +4,24 @@ from django.views.decorators.http import require_POST
 from .forms import  Coordinate_Form
 from .models import Truck, Storage
 from . import logic
-    
+
+# Data output for the template 
 def manage_storages(request, storage_slug=None):
-    storage = None
-    storages = Storage.objects.all()
-    trucks = Truck.objects.filter(is_online=True)
     
-    if storage_slug:
-        storage = get_object_or_404(Storage, slug=storage_slug)
-        trucks = trucks.filter(storage=storage)
-
+    context = {}
+    storages = Storage.objects.all()
+    for str in storages:
+        context[str] = list(Truck.objects.filter(is_online=True,storage=str))
     return render(request, 'calc/detail/detail.html',
-                {'storage': storage,
-                'storages': storages,
-                'trucks': trucks})
+                {'context': context,
+                })
 
 
+# Data update on the template 
 @require_POST
-def coordinate_update(request):
+def coordinate_update(request,truck_id):
     form = Coordinate_Form(request.POST)
     if form.is_valid():
         cd = form.cleaned_data
-        logic.storage_upload(cd['quantity'],cd['update'])
+        #logic.storage_upload(truck_id=truck_id, cd['quantity'],cd['update'])
     return redirect('cart:cart_detail')

@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from decimal import Decimal
 # from django.contrib.gis.db import models as geo_model
 # Create your models here.
 
@@ -44,6 +45,13 @@ class Truck(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def overload(self):
+        if(self.carrying_capacity <= self.max_carrying_capacity):
+            return 0
+        else:
+            return "{:.1%}".format(self.carrying_capacity/self.max_carrying_capacity)
+            
     def get_absolute_url(self):
         return reverse('shop:product_list_by_category', args=[self.slug])
 
