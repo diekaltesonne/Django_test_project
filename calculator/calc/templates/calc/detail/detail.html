@@ -11,6 +11,8 @@
                 <td>Объем после разгрузки, т </td>
                 <td>Качественные хар-ки после разгрузки </td>
             </tr>
+        </table>
+        <table class = "Storage">
             <tr>
                 <td>{{str.name}}</td>
                 <td>{{str.capacity}}</td>
@@ -18,7 +20,7 @@
                 <td>{{str.percentage_SiO2}} SiO2, {{str.percentage_Fe}} Fe</td>
             </tr>
         </table>
-        <table class = "Trucks">
+        <table>
             <tr>
                 <td>Бортовой номер</td>
                 <td>Модель</td>
@@ -27,100 +29,50 @@
                 <td>Перегруз, %</td>
                 <td>Координаты разгрузки, (X,Y)</td> 
             </tr>
+        </table>
+        <table class = "Trucks">
             {% for truck in trucks %}
-                <tr>
+                <tr class = 'truck_id' id = {{truck_id}}>
                     <td>{{truck.name}}</td>
                     <td>{{truck.model}}</td>
                     <td>{{truck.max_carrying_capacity}}</td>
                     <td>{{truck.carrying_capacity}}</td>
                     <td>{{truck.overload}}</td>
                     <td>
-                        <input name = "{{ truck.id }}_1" id="point_input" type="number" value=0 size=1 title="X">
-                        <input name = "{{ truck.id }}_2" id="point_input" type="number" value=0 size=1 title="Y">
+                        <input id="point_x_input" type="number" value=0 size=1 title="X">
+                        <input id="point_y_input" type="number" value=0 size=1 title="Y">
                     </td> 
                 </tr>
             {% endfor %}
         </table>
     {% endfor %}
     <input id="submit-btn" type="submit" value="Сalculate"/>
-{% endblock %}
-    
-    
-{% comment %}     
     <script>
         $(document).on('click', '#submit-btn', function(event){
             var response_data = []
-            var storage_data = $('.Storage');
-            var truck_data = $('.Trucks');
-
-            for(i=0;i<question_objs.length;i++){
-                var question_text = $(question_objs[i]).find('label').text();
-                var choice_id = $(choice_objs[i]).find('input').val();
-                var choice_text = $(choice_objs[i]).find('label').text();
-                var question_choice = {
-                    "question_text": question_text,
-                    "choice_id": choice_id,
-                    "choice_text": choice_text
+            var trucks_data = $('.Trucks');
+            
+            for(i=0;i<trucks_data.length;i++){
+                //var truck_id = $(trucks_data[i]).find('.truck_id').id();
+                var coordinate_x = $(trucks_data[i]).find('#point_x_input').val();
+                var coordinate_y = $(trucks_data[i]).find('#point_y_input').val();
+                var truck_data = {
+                    //"truck_id": truck_id,
+                    "coordinate_x": coordinate_x,
+                    "coordinate_y": coordinate_y
                 }
-                response_data.push(question_choice);
+                response_data.push(truck_data);
             }
             $.ajax({
-                type: "POST",
-                url: "url_to_your_view",
-                data: response_data,
-                success: function(response){
-                    alert("Success");
-                }
+                    type: "POST",
+                    url: "url_to_your_view/",
+                    data: response_data,
+                    success: function(response){
+                        alert("Success");
+                    }
+                });
             });
-        });
     </script>
 {% endblock %}
 
 
-
-
-{% for question in latest_question_list %}
-    <form>
-        <div class="row">
-            <div class="col-topic">
-                <label>{{ question.question_text }}</label>
-            </div>
-            {% for choice in question.choice_set.all %}
-                <div class="col-select">
-                    <input type="radio" name="choice" value="{{ choice.id }}" />
-                    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-                </div>
-            {% endfor %}
-        </div>
-    </form>
-{% endfor %}
-<input id="submit-btn" type="submit" value="Vote" />
-
-<script>
-    $(document).on('click', '#submit-btn', function(event){
-        var response_data = []
-        var question_objs = $('.col-topic');
-        var choice_objs = $('.col-select');
-
-        for(i=0;i<question_objs.length;i++){
-            var question_text = $(question_objs[i]).find('label').text();
-            var choice_id = $(choice_objs[i]).find('input').val();
-            var choice_text = $(choice_objs[i]).find('label').text();
-            var question_choice = {
-                "question_text": question_text,
-                "choice_id": choice_id,
-                "choice_text": choice_text
-            }
-            response_data.push(question_choice);
-        }
-        $.ajax({
-            type: "POST",
-            url: "url_to_your_view",
-            data: response_data,
-            success: function(response){
-                alert("Success");
-            }
-        });
-    });
-</script> 
-{% endcomment %}
