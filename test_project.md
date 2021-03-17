@@ -13,5 +13,8 @@ Checking if a point is contained in a polygon/multipolygon - for many points
 - https://stackoverflow.com/questions/51855917/shapely-polygon-from-string
 Shapely: Polygon from String
 
-
+#### Add JavaScript for accumulate data from table:
+- https://symfony.com/doc/current/security/csrf.html How to Implement CSRF Protection
+- https://stackoverflow.com/questions/45470802/how-to-pass-along-csrf-token-in-an-ajax-post-request-for-a-form How to pass along CSRF token in an AJAX post request for a form?
+ 
 ## Admin data: ivan, gremlin40

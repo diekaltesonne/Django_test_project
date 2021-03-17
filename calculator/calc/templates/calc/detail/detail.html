@@ -32,7 +32,8 @@
         </table>
         <table class = "Trucks">
             {% for truck in trucks %}
-                <tr class = 'truck_id' id = {{truck_id}}>
+                <tr>
+                    <td class = 'truck_id'>{{truck.id}}</td>
                     <td>{{truck.name}}</td>
                     <td>{{truck.model}}</td>
                     <td>{{truck.max_carrying_capacity}}</td>
@@ -46,18 +47,18 @@
             {% endfor %}
         </table>
     {% endfor %}
+    <input type="hidden" name="token" value="{{csrf_token}}"/>
     <input id="submit-btn" type="submit" value="Сalculate"/>
     <script>
         $(document).on('click', '#submit-btn', function(event){
             var response_data = []
             var trucks_data = $('.Trucks');
-            
             for(i=0;i<trucks_data.length;i++){
-                //var truck_id = $(trucks_data[i]).find('.truck_id').id();
+                var truck_id = $(trucks_data[i]).find('.truck_id').text();
                 var coordinate_x = $(trucks_data[i]).find('#point_x_input').val();
                 var coordinate_y = $(trucks_data[i]).find('#point_y_input').val();
                 var truck_data = {
-                    //"truck_id": truck_id,
+                    "truck_id": truck_id,
                     "coordinate_x": coordinate_x,
                     "coordinate_y": coordinate_y
                 }
@@ -66,7 +67,8 @@
             $.ajax({
                     type: "POST",
                     url: "url_to_your_view/",
-                    data: response_data,
+                    data: {data: JSON.stringify(response_data),
+                           csrfmiddlewaretoken: '{{ csrf_token }}'},
                     success: function(response){
                         alert("Success");
                     }
