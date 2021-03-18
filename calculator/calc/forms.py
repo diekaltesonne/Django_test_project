@@ -1,7 +1,9 @@
-from django import forms
-PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 21)]
+from rest_framework import serializers
 
+class TruckDataSerializer(serializers.Serializer):
+    truck_id = serializers.IntegerField(required=True, min_value=0)
+    coordinate_x = serializers.IntegerField(required=True, min_value=0)
+    coordinate_y = serializers.IntegerField(required=True, min_value=0)
 
-class Coordinate_Form(forms.Form):
-    x_coordinate = forms.IntegerField()
-    y_coordinate = forms.IntegerField()
+class ValidateFormSerializer(serializers.Serializer):
+    trucks = serializers.ListField(child=TruckDataSerializer())

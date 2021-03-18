@@ -16,5 +16,10 @@ Shapely: Polygon from String
 #### Add JavaScript for accumulate data from table:
 - https://symfony.com/doc/current/security/csrf.html How to Implement CSRF Protection
 - https://stackoverflow.com/questions/45470802/how-to-pass-along-csrf-token-in-an-ajax-post-request-for-a-form How to pass along CSRF token in an AJAX post request for a form?
+
+#### Validate POST request on backend(add class to forms.py)
+- https://stackoverflow.com/questions/44085153/how-to-validate-a-json-object-in-django - How to validate a json object in django
+- https://www.django-rest-framework.org/tutorial/quickstart/#serializers - Django REST framework
+- https://stackoverflow.com/questions/59740384/cant-identify-problem-in-my-serializers-py-file - Can't identify problem in my serializers.py file
  
 ## Admin data: ivan, gremlin40

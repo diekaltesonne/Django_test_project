@@ -51,7 +51,7 @@
     <input id="submit-btn" type="submit" value="Сalculate"/>
     <script>
         $(document).on('click', '#submit-btn', function(event){
-            var response_data = []
+            var response_data = {}
             var trucks_data = $('.Trucks');
             for(i=0;i<trucks_data.length;i++){
                 var truck_id = $(trucks_data[i]).find('.truck_id').text();
@@ -62,11 +62,15 @@
                     "coordinate_x": coordinate_x,
                     "coordinate_y": coordinate_y
                 }
-                response_data.push(truck_data);
+                if (response_data[truck_id]) {
+                    response_data[truck_id].push(truck_data);
+                } else {
+                    response_data[truck_id] = [truck_data];
+                }
             }
             $.ajax({
                     type: "POST",
-                    url: "url_to_your_view/",
+                    url: "coordinate_update/",
                     data: {data: JSON.stringify(response_data),
                            csrfmiddlewaretoken: '{{ csrf_token }}'},
                     success: function(response){

@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from decimal import Decimal
-# from django.contrib.gis.db import models as geo_model
 # Create your models here.
 
 class Storage(models.Model):
@@ -10,11 +9,7 @@ class Storage(models.Model):
     capacity = models.DecimalField(max_digits=10, decimal_places=2)
     percentage_SiO2 = models.DecimalField(max_digits=10, decimal_places=2)
     percentage_Fe = models.DecimalField(max_digits=10, decimal_places=2)
-    
-    # TO DO
-    # WKT format
-    #mpoly = models.MultiPolygonField(srid=4326, null=False, blank=False)
-
+    #coordinates = models.TextField(null=True,blank=True)
     class Meta:
         ordering = ('name',)
         verbose_name = 'storage'
