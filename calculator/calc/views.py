@@ -1,12 +1,9 @@
 # Create your views here.
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from .forms import  ValidateFormSerializer
 from .models import Truck, Storage
-from . import logic
 import json
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.http import JsonResponse
 
 import logging
@@ -23,8 +20,6 @@ import shapely.wkt
 # Data output for the template 
 def manage_storages(request):
     context = {}
-    logger = logging.getLogger(__name__)
-    logger.info("ХУЙ")
     storages = Storage.objects.all()
     for str in storages:
         context[str] = list(Truck.objects.filter(is_online=True,storage=str))
@@ -69,6 +64,7 @@ def update_storages_data(post_data):
 
 @require_POST
 def coordinate_update(request):
+    print(json.loads(request.POST['data']))
     valid_ser = ValidateFormSerializer(data = json.loads(request.POST['data']))
     if valid_ser.is_valid():
         post_data = valid_ser.validated_data   
@@ -76,6 +72,5 @@ def coordinate_update(request):
         update_storages_data(post_data)    
     else:
         print(valid_ser.errors)
-    #return redirect('calc:manage_storages')
     return JsonResponse({"update": "OK"})
-    #return HttpResponseRedirect(reverse('calc:manage_storages'))
+
