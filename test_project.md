@@ -21,5 +21,7 @@ Shapely: Polygon from String
 - https://stackoverflow.com/questions/44085153/how-to-validate-a-json-object-in-django - How to validate a json object in django
 - https://www.django-rest-framework.org/tutorial/quickstart/#serializers - Django REST framework
 - https://stackoverflow.com/questions/59740384/cant-identify-problem-in-my-serializers-py-file - Can't identify problem in my serializers.py file
- 
+
+#### Create view for recalculate data on frontend page
+
 ## Admin data: ivan, gremlin40
