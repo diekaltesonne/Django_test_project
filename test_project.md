@@ -1,8 +1,10 @@
 ## SOURCE
 #### General
+- https://www.fullstackpython.com/table-of-contents.html Table of Contents
 - https://ru.stackoverflow.com/questions/824011/%D0%92%D1%8B%D0%B2%D0%BE%D0%B4-%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B8%D0%BC%D0%BE%D0%B3%D0%BE-%D0%B1%D0%B0%D0%B7%D1%8B-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-django 
 Вывод содержимого базы данных с помощью Django
 - https://simpleisbetterthancomplex.com/tutorial/2016/07/26/how-to-reset-migrations.html How to Reset Migrations
+- https://stackoverflow.com/questions/48580837/how-to-allow-page-refresh-redirect-after-ajax-post-submission-of-django-form
 #### Add format WKT on Django model
 - https://stackoverflow.com/questions/53767311/store-polygon-type-of-data-on-the-sqlite-database
 Store polygon type of data on the SQLite database

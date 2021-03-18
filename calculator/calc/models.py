@@ -9,7 +9,7 @@ class Storage(models.Model):
     capacity = models.DecimalField(max_digits=10, decimal_places=2)
     percentage_SiO2 = models.DecimalField(max_digits=10, decimal_places=2)
     percentage_Fe = models.DecimalField(max_digits=10, decimal_places=2)
-    #coordinates = models.TextField(null=True,blank=True)
+    coordinates = models.TextField(null=True,blank=True)
     class Meta:
         ordering = ('name',)
         verbose_name = 'storage'

@@ -75,9 +75,6 @@
                         "coordinate_y" : coordinate_y,
                     };
                 }
-                response_data = {
-                    "storage_data":storage_data
-                }
             }
             response_data = {
                 "storage_data":storage_data
@@ -89,6 +86,7 @@
                            csrfmiddlewaretoken: '{{ csrf_token }}'},
                     success: function(response){
                         alert("Success");
+                        window.location.reload() 
                     }
                 });
             });
