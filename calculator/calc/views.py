@@ -10,8 +10,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # shapely import.
-from shapely.strtree import STRtree
-from shapely.geometry import Polygon, Point
+from shapely.geometry import Point
 import shapely.wkt
 
 
@@ -35,8 +34,7 @@ def update_storages_data(post_data):
         capacity_Fe = 0
         capacity_SeO2 = 0
         capacity_none_type= 0
-        new_capacity_Fe = 0
-        new_capacity_SeO2 = 0 
+        
         storage = Storage.objects.get(id = str)
         print(storage.coordinates)
         polygon = shapely.wkt.loads(storage.coordinates)
@@ -44,14 +42,14 @@ def update_storages_data(post_data):
         for id , val in trucks['trucks_data'].items():
             print(val)
             point = Point(val['coordinate_x'],val['coordinate_y'])
-            #if check_entry_of_point(point,polygon):
-            truck = Truck.objects.get(id=id)
-            capacity_Fe += truck.carrying_capacity * truck.percentage_Fe
-            capacity_SeO2 += truck.carrying_capacity * truck.percentage_SiO2
-            capacity_none_type += truck.carrying_capacity * (1-(truck.percentage_Fe+truck.percentage_SiO2))
+            if check_entry_of_point(point,polygon):
+                truck = Truck.objects.get(id=id)
+                capacity_Fe += truck.carrying_capacity * truck.percentage_Fe
+                capacity_SeO2 += truck.carrying_capacity * truck.percentage_SiO2
+                capacity_none_type += truck.carrying_capacity * (1-(truck.percentage_Fe+truck.percentage_SiO2))
             
         new_capacity_Fe = capacity_Fe + storage.capacity * storage.percentage_Fe
-        new_capacity_SeO2 = capacity_Fe + storage.capacity * storage.percentage_SiO2
+        new_capacity_SeO2 = capacity_SeO2 + storage.capacity * storage.percentage_SiO2
         new_capacity= (new_capacity_Fe + new_capacity_SeO2+(capacity_none_type + (storage.capacity - ((storage.capacity * storage.percentage_Fe) + (storage.capacity * storage.percentage_SiO2)))))
         new_persanage_Fe = new_capacity_Fe/new_capacity
         new_persanage_SeO2 =  new_capacity_SeO2/new_capacity
@@ -60,7 +58,6 @@ def update_storages_data(post_data):
         storage.percentage_Fe=new_persanage_Fe
         storage.save()
 
-        #Storage.objects.get(id = str).update(capacity=new_capacity, percentage_SiO2=new_persanage_SeO2,percentage_Fe=new_persanage_Fe)       
 
 @require_POST
 def coordinate_update(request):
