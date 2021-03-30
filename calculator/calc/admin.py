@@ -13,4 +13,4 @@ class StorageAdmin(admin.ModelAdmin):
     list_editable = ['capacity', 'percentage_SiO2', 'percentage_Fe']
     
     
-# Register your models here.
+

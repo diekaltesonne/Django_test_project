@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from decimal import Decimal
-# Create your models here.
+
 
 
 class Storage(models.Model):
