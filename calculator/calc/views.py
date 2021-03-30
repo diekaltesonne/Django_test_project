@@ -1,4 +1,3 @@
-# Create your views here.
 from django.shortcuts import render
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse
@@ -18,7 +17,6 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-# Data output for the template
 def manage_storages(request):
     context = {}
     storages = Storage.objects.all()
